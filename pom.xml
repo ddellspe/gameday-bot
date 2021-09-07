@@ -147,21 +147,18 @@
                 </configuration>
             </plugin>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.1.4</version>
+                <configuration>
+                    <to>
+                        <image>ddellspe/gameday-bot</image>
+                    </to>
+                </configuration>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <mainClass>com.novamaday.d4j.maven.simplebot.SimpleBot</mainClass>
-                        </manifest>
-                    </archive>
-                </configuration>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -29,6 +29,7 @@ public class GamedayAudioManager {
     AudioSourceManagers.registerRemoteSources(PLAYER_MANAGER);
     AudioSourceManagers.registerLocalSource(PLAYER_MANAGER);
   }
+
   private static final Map<Snowflake, GamedayAudioManager> MANAGERS = new ConcurrentHashMap<>();
 
   public static GamedayAudioManager of(final Snowflake id) {
@@ -53,9 +54,11 @@ public class GamedayAudioManager {
     Map<Snowflake, GuildConfiguration> configurationMap = new HashMap<>();
     try {
       Resource config = matcher.getResource("configs/gameday_config.json");
-      List<GuildConfiguration> guildConfigurations = d4jMapper.getObjectMapper().readValue(
-          config.getInputStream(), new TypeReference<List<GuildConfiguration>>() {});
-      for(GuildConfiguration cfg : guildConfigurations) {
+      List<GuildConfiguration> guildConfigurations =
+          d4jMapper
+              .getObjectMapper()
+              .readValue(config.getInputStream(), new TypeReference<List<GuildConfiguration>>() {});
+      for (GuildConfiguration cfg : guildConfigurations) {
         configurationMap.put(cfg.getGuildId(), cfg);
       }
     } catch (IOException e) {

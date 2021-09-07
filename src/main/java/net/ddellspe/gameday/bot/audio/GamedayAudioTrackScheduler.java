@@ -40,7 +40,7 @@ public class GamedayAudioTrackScheduler extends AudioEventAdapter {
   }
 
   public void stop() {
-    if(!queue.isEmpty()) {
+    if (!queue.isEmpty()) {
       queue.clear();
     }
     player.stopTrack();

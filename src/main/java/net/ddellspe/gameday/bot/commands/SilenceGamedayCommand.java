@@ -2,9 +2,6 @@ package net.ddellspe.gameday.bot.commands;
 
 import discord4j.common.util.Snowflake;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.VoiceState;
-import discord4j.core.object.entity.channel.VoiceChannel;
-import discord4j.voice.VoiceConnection;
 import net.ddellspe.gameday.bot.audio.GamedayAudioManager;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;

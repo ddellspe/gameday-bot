@@ -29,7 +29,6 @@ public class EndGamedayCommand implements MessageResponseCommand {
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
     Snowflake voiceChannelId = manager.getVoiceChannel();
 
-
     final Mono<Boolean> nonBotChannelCountIsZero =
         event
             .getClient()

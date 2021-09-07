@@ -22,7 +22,7 @@ public class GamedayAudioProvider extends AudioProvider {
   public boolean provide() {
     final boolean didProvide = player.provide(frame);
 
-    if(didProvide) {
+    if (didProvide) {
       getBuffer().flip();
     }
 

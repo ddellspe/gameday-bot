@@ -22,6 +22,7 @@ public class PingCommand implements MessageResponseCommand {
     return event
         .getMessage()
         .getChannel()
-        .flatMap(channel -> channel.createMessage("Spong")).then();
+        .flatMap(channel -> channel.createMessage("Spong"))
+        .then();
   }
 }
