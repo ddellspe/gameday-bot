@@ -151,8 +151,13 @@
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.1.4</version>
                 <configuration>
+                    <container>
+                        <labels>
+                            <org.opencontainers.image.source>https://github.com/ddellspe/gameday-bot</org.opencontainers.image.source>
+                        </labels>
+                    </container>
                     <to>
-                        <image>ddellspe/gameday-bot</image>
+                        <image>ghcr.io/ddellspe/gameday-bot</image>
                     </to>
                 </configuration>
             </plugin>
