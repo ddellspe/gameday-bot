@@ -13,6 +13,18 @@ public class GuildConfiguration {
   @JsonProperty("voiceChannelId")
   private String voiceChannelId;
 
+  @JsonProperty("team")
+  private String team;
+
+  @JsonProperty("touchdown")
+  private String touchdown;
+
+  @JsonProperty("field goal")
+  private String fieldGoal;
+
+  @JsonProperty("victory")
+  private String victory;
+
   public Snowflake getGuildId() {
     return Snowflake.of(guildId);
   }
@@ -23,5 +35,21 @@ public class GuildConfiguration {
 
   public Snowflake getVoiceChannelId() {
     return Snowflake.of(voiceChannelId);
+  }
+
+  public String getTeam() {
+    return team;
+  }
+
+  public String getTouchdown() {
+    return touchdown;
+  }
+
+  public String getFieldGoal() {
+    return fieldGoal;
+  }
+
+  public String getVictory() {
+    return victory;
   }
 }

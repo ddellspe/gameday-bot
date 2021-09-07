@@ -4,13 +4,12 @@ import discord4j.common.util.Snowflake;
 import discord4j.core.event.domain.VoiceStateUpdateEvent;
 import discord4j.core.object.VoiceState;
 import discord4j.core.object.entity.channel.VoiceChannel;
-import java.util.Map;
 import net.ddellspe.gameday.bot.audio.GamedayAudioManager;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class AutoJoinCommand implements AudioManagerTriggerCommand {
+public class AutoJoin implements VoiceStateTrigger {
 
   @Override
   public boolean isCorrectEventType(VoiceStateUpdateEvent event) {
@@ -20,15 +19,14 @@ public class AutoJoinCommand implements AudioManagerTriggerCommand {
   @Override
   public Snowflake getFilterChannel(Snowflake guildId) {
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
-    return manager.getVoiceChannels().get(guildId);
+    return manager.getVoiceChannel();
   }
 
   @Override
   public Mono<Void> handle(VoiceStateUpdateEvent event) {
-    // This will be guaranteed to be present since we're limiting to Join and Move events
     Snowflake guildId = event.getCurrent().getGuildId();
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
-    Snowflake voiceChannelId = manager.getVoiceChannels().get(guildId);
+    Snowflake voiceChannelId = manager.getVoiceChannel();
 
     final Mono<Boolean> nonBotChannelCountIsGreaterThanZero =
         event

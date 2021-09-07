@@ -32,17 +32,16 @@ public class GamedayAudioManager {
   private static final Map<Snowflake, GamedayAudioManager> MANAGERS = new ConcurrentHashMap<>();
 
   public static GamedayAudioManager of(final Snowflake id) {
-    return MANAGERS.computeIfAbsent(id, ignored -> new GamedayAudioManager());
+    return MANAGERS.computeIfAbsent(id, ignored -> new GamedayAudioManager(id));
   }
 
   private final AudioPlayer player;
   private final GamedayAudioTrackScheduler scheduler;
   private final GamedayAudioProvider provider;
-  private final Map<Snowflake, Snowflake> voiceChannels;
-  private final Map<Snowflake, Snowflake> chatChannels;
-  private AtomicBoolean started;
+  private final GuildConfiguration configuration;
+  private final AtomicBoolean started;
 
-  private GamedayAudioManager() {
+  private GamedayAudioManager(Snowflake guildId) {
     player = PLAYER_MANAGER.createPlayer();
     scheduler = new GamedayAudioTrackScheduler(player);
     provider = new GamedayAudioProvider(player);
@@ -51,19 +50,18 @@ public class GamedayAudioManager {
     JacksonResources d4jMapper = JacksonResources.create();
     PathMatchingResourcePatternResolver matcher = new PathMatchingResourcePatternResolver();
 
-    voiceChannels = new HashMap<>();
-    chatChannels = new HashMap<>();
+    Map<Snowflake, GuildConfiguration> configurationMap = new HashMap<>();
     try {
       Resource config = matcher.getResource("configs/gameday_config.json");
       List<GuildConfiguration> guildConfigurations = d4jMapper.getObjectMapper().readValue(
           config.getInputStream(), new TypeReference<List<GuildConfiguration>>() {});
       for(GuildConfiguration cfg : guildConfigurations) {
-        chatChannels.put(cfg.getGuildId(), cfg.getChatChanelId());
-        voiceChannels.put(cfg.getGuildId(), cfg.getVoiceChannelId());
+        configurationMap.put(cfg.getGuildId(), cfg);
       }
     } catch (IOException e) {
       e.printStackTrace();
     }
+    configuration = configurationMap.get(guildId);
     started = new AtomicBoolean(false);
   }
 
@@ -84,6 +82,7 @@ public class GamedayAudioManager {
   }
 
   public void stop() {
+    scheduler.stop();
     started.set(false);
   }
 
@@ -91,11 +90,15 @@ public class GamedayAudioManager {
     return started.get();
   }
 
-  public Map<Snowflake, Snowflake> getVoiceChannels() {
-    return voiceChannels;
+  public GuildConfiguration getConfiguration() {
+    return configuration;
   }
 
-  public Map<Snowflake, Snowflake> getChatChannels() {
-    return chatChannels;
+  public Snowflake getVoiceChannel() {
+    return configuration.getVoiceChannelId();
+  }
+
+  public Snowflake getChatChannel() {
+    return configuration.getChatChanelId();
   }
 }

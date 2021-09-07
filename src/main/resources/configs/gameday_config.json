@@ -2,6 +2,28 @@
   {
     "guildId": 699960339181207623,
     "chatChannelId": 884073751707267122,
-    "voiceChannelId": 883850153197461504
+    "voiceChannelId": 883850153197461504,
+    "team": "Iowa",
+    "touchdown": "https://www.youtube.com/watch?v=l4ANP8g8wrE",
+    "field goal": "https://www.youtube.com/watch?v=n87dO4SjGJU",
+    "victory": "https://www.youtube.com/watch?v=y2VS4VynC-0"
+  },
+  {
+    "guildId": 884566541402779718,
+    "chatChannelId": 884566626165477437,
+    "voiceChannelId": 884566603923095613,
+    "team": "Iowa",
+    "touchdown": "https://www.youtube.com/watch?v=l4ANP8g8wrE",
+    "field goal": "https://www.youtube.com/watch?v=n87dO4SjGJU",
+    "victory": "https://www.youtube.com/watch?v=y2VS4VynC-0"
+  },
+  {
+    "guildId": 767616471399792650,
+    "chatChannelId": 768917458890653716,
+    "voiceChannelId": 767616471399792655,
+    "team": "Iowa",
+    "touchdown": "https://www.youtube.com/watch?v=l4ANP8g8wrE",
+    "field goal": "https://www.youtube.com/watch?v=n87dO4SjGJU",
+    "victory": "https://www.youtube.com/watch?v=y2VS4VynC-0"
   }
 ]

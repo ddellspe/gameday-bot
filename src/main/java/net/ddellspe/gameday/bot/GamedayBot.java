@@ -3,8 +3,11 @@ package net.ddellspe.gameday.bot;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.event.domain.VoiceStateUpdateEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
+import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.channel.Channel;
 import discord4j.rest.RestClient;
-import net.ddellspe.gameday.bot.listeners.AudioManagerTriggerCommandListener;
+import java.util.List;
+import net.ddellspe.gameday.bot.listeners.VoiceStateTriggerListener;
 import net.ddellspe.gameday.bot.listeners.MessageResponseCommandListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +29,14 @@ public class GamedayBot {
         .build()
         .withGateway(
             gatewayClient -> {
+              List<Guild> guilds = gatewayClient.getGuilds().collectList().block();
+              for (Guild guild : guilds) {
+                System.out.println(guild);
+                for (Channel channel : guild.getChannels().collectList().block()) {
+                  System.out.println(channel);
+                }
+              }
+
               MessageResponseCommandListener messageResponseCommandListener =
                   new MessageResponseCommandListener(springContext);
 
@@ -34,8 +45,8 @@ public class GamedayBot {
                       .on(MessageCreateEvent.class, messageResponseCommandListener::handle)
                       .then();
 
-              AudioManagerTriggerCommandListener audioManagerTriggerCommandListener =
-                  new AudioManagerTriggerCommandListener(springContext);
+              VoiceStateTriggerListener audioManagerTriggerCommandListener =
+                  new VoiceStateTriggerListener(springContext);
 
               Mono<Void> onVoiceStateChanged =
                   gatewayClient

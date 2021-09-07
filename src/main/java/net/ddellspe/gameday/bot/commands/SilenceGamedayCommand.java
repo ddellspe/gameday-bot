@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
 
 @Component
-public class EndGamedayCommand implements MessageResponseCommand {
+public class SilenceGamedayCommand implements MessageResponseCommand {
   @Override
   public String getName() {
-    return "end";
+    return "silence";
   }
 
   @Override
@@ -27,26 +27,19 @@ public class EndGamedayCommand implements MessageResponseCommand {
     // This will be guaranteed to be present since we're limiting to Join and Move events
     Snowflake guildId = event.getGuildId().get();
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
-    Snowflake voiceChannelId = manager.getVoiceChannel();
 
+    final String message;
+    if (manager.isStarted()) {
+      manager.getScheduler().stop();
+      message = "Silencing Gameday Manager";
+    } else {
+      message = "Gameday manager is not running, no audio playing, currently.";
+    }
 
-    final Mono<Boolean> nonBotChannelCountIsZero =
-        event
-            .getClient()
-            .getChannelById(voiceChannelId)
-            .cast(VoiceChannel.class)
-            .flatMapMany(VoiceChannel::getVoiceStates)
-            .flatMap(VoiceState::getMember)
-            .filter(member -> !member.isBot())
-            .count()
-            .map(count -> count == 0);
     return event
         .getMessage()
         .getChannel()
-        .flatMap(channel -> channel.createMessage("Stopping Gameday Manager"))
-        .doOnNext(___ -> manager.stop())
-        .flatMap(___ -> event.getClient().getVoiceConnectionRegistry().getVoiceConnection(guildId))
-        .filter(___ -> !manager.isStarted())
-        .flatMap(VoiceConnection::disconnect);
+        .flatMap(channel -> channel.createMessage(message))
+        .then();
   }
 }

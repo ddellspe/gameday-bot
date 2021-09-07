@@ -18,7 +18,7 @@ public class StartGamedayCommand implements MessageResponseCommand {
   @Override
   public Snowflake getFilterChannel(Snowflake guildId) {
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
-    return manager.getChatChannels().get(guildId);
+    return manager.getChatChannel();
   }
 
   @Override
@@ -26,7 +26,7 @@ public class StartGamedayCommand implements MessageResponseCommand {
     // This will be guaranteed to be present since we're limiting to Join and Move events
     Snowflake guildId = event.getGuildId().get();
     GamedayAudioManager manager = GamedayAudioManager.of(guildId);
-    Snowflake voiceChannelId = manager.getVoiceChannels().get(guildId);
+    Snowflake voiceChannelId = manager.getVoiceChannel();
 
     final Mono<Boolean> nonBotChannelCountIsGreaterThanZero =
         event
