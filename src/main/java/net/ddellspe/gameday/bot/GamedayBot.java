@@ -3,11 +3,7 @@ package net.ddellspe.gameday.bot;
 import discord4j.core.DiscordClientBuilder;
 import discord4j.core.event.domain.VoiceStateUpdateEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
-import discord4j.core.object.entity.Guild;
-import discord4j.core.object.entity.channel.Channel;
 import discord4j.rest.RestClient;
-import java.util.List;
-import java.util.Map;
 import net.ddellspe.gameday.bot.listeners.MessageResponseCommandListener;
 import net.ddellspe.gameday.bot.listeners.VoiceStateTriggerListener;
 import org.slf4j.Logger;
@@ -30,8 +26,6 @@ public class GamedayBot {
         .build()
         .withGateway(
             gatewayClient -> {
-              List<Guild> guilds = gatewayClient.getGuilds().collectList().block();
-
               MessageResponseCommandListener messageResponseCommandListener =
                   new MessageResponseCommandListener(springContext);
 
