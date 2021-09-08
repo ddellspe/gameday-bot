@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 public class FieldGoalGamedayCommand implements MessageResponseCommand {
   @Override
   public String getName() {
-    return "field goal";
+    return "fg";
   }
 
   @Override
