@@ -4,12 +4,10 @@ import discord4j.core.DiscordClientBuilder;
 import discord4j.core.event.domain.VoiceStateUpdateEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.rest.RestClient;
-import java.util.Arrays;
 import net.ddellspe.gameday.bot.listeners.MessageResponseCommandListener;
 import net.ddellspe.gameday.bot.listeners.VoiceStateTriggerListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
@@ -52,18 +50,5 @@ public class GamedayBot {
   @Bean
   public RestClient discordRestClient() {
     return RestClient.create(System.getenv("BOT_TOKEN"));
-  }
-
-  @Bean
-  public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-    return args -> {
-      System.out.println("Let's inspect the beans provided by Spring Boot:");
-
-      String[] beanNames = ctx.getBeanDefinitionNames();
-      Arrays.sort(beanNames);
-      for (String beanName : beanNames) {
-        System.out.println(beanName);
-      }
-    };
   }
 }
