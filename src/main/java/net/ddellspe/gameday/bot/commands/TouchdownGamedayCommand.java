@@ -58,7 +58,7 @@ public class TouchdownGamedayCommand implements MessageResponseCommand {
         .getMessage()
         .getChannel()
         .filter(___ -> message != null)
-        .flatMap(channel -> channel.createMessage(message))
+        // .flatMap(channel -> channel.createMessage(message))
         .then();
   }
 }
